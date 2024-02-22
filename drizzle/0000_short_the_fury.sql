@@ -1,10 +1,3 @@
-CREATE TABLE `admin` (
-	`adminid` int AUTO_INCREMENT NOT NULL,
-	`email` varchar(255) NOT NULL,
-	`password` varchar(255) NOT NULL,
-	CONSTRAINT `admin_adminid` PRIMARY KEY(`adminid`)
-);
---> statement-breakpoint
 CREATE TABLE `business` (
 	`businessid` int AUTO_INCREMENT NOT NULL,
 	`ownerid` int NOT NULL,
@@ -27,14 +20,6 @@ CREATE TABLE `logs` (
 	`logmessage` varchar(255) NOT NULL,
 	`timestamp` timestamp NOT NULL DEFAULT (now()),
 	CONSTRAINT `logs_logid` PRIMARY KEY(`logid`)
-);
---> statement-breakpoint
-CREATE TABLE `owner` (
-	`ownerid` int AUTO_INCREMENT NOT NULL,
-	`email` varchar(255) NOT NULL,
-	`password` varchar(255) NOT NULL,
-	`phone` varchar(13) NOT NULL,
-	CONSTRAINT `owner_ownerid` PRIMARY KEY(`ownerid`)
 );
 --> statement-breakpoint
 CREATE TABLE `report` (
@@ -77,11 +62,12 @@ CREATE TABLE `user` (
 	`userid` int AUTO_INCREMENT NOT NULL,
 	`email` varchar(255) NOT NULL,
 	`password` varchar(255) NOT NULL,
+	`role` enum('admin','owner','user'),
 	CONSTRAINT `user_userid` PRIMARY KEY(`userid`)
 );
 --> statement-breakpoint
-ALTER TABLE `business` ADD CONSTRAINT `business_ownerid_owner_ownerid_fk` FOREIGN KEY (`ownerid`) REFERENCES `owner`(`ownerid`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `logs` ADD CONSTRAINT `logs_adminid_admin_adminid_fk` FOREIGN KEY (`adminid`) REFERENCES `admin`(`adminid`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `business` ADD CONSTRAINT `business_ownerid_user_userid_fk` FOREIGN KEY (`ownerid`) REFERENCES `user`(`userid`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `logs` ADD CONSTRAINT `logs_adminid_user_userid_fk` FOREIGN KEY (`adminid`) REFERENCES `user`(`userid`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `report` ADD CONSTRAINT `report_userid_user_userid_fk` FOREIGN KEY (`userid`) REFERENCES `user`(`userid`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `report` ADD CONSTRAINT `report_reviewid_review_reviewid_fk` FOREIGN KEY (`reviewid`) REFERENCES `review`(`reviewid`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `report` ADD CONSTRAINT `report_reportcategory_reportcategory_categoryid_fk` FOREIGN KEY (`reportcategory`) REFERENCES `reportcategory`(`categoryid`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
