@@ -1,17 +1,16 @@
 import {
-  int,
-  decimal,
-  varchar,
-  mysqlTable,
   boolean,
-  date,
+  decimal,
+  int,
+  mysqlTable,
+  varchar,
 } from "drizzle-orm/mysql-core";
-import { owner } from "./owner";
+import { user } from "./user";
 
 export const business = mysqlTable("business", {
   businessid: int("businessid").primaryKey().autoincrement(),
   ownerid: int("ownerid")
-    .references(() => owner.ownerid)
+    .references(() => user.userid)
     .notNull(),
   name: varchar("name", { length: 100 }).notNull(),
   city: varchar("city", { length: 100 }).notNull(),
