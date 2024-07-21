@@ -1,0 +1,23 @@
+services:
+  web:
+    build:
+      context: .
+    image: revi
+    container_name: revi
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+  database:
+    image: mysql:8.0
+    container_name: revi_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3306:3306
+    volumes:
+      - revi_data:/var/lib/mysql
+
+volumes:
+  revi_data:
