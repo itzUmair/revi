@@ -12,12 +12,16 @@ services:
   database:
     image: mysql:8.0
     container_name: revi_db
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=revi
     ports:
       - 3306:3306
+    expose:
+      - 3306
     volumes:
-      - revi_data:/var/lib/mysql
+      - data:/var/lib/mysql
 
 volumes:
-  revi_data:
+  data:
