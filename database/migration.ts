@@ -5,7 +5,8 @@ import postgres from "postgres";
 
 function main() {
   const migrationClient = postgres(validEnvVariables.POSTGRES_URL, { max: 1 });
-  migrate(drizzle(migrationClient), { migrationsFolder: "@/drizzle" });
+  migrate(drizzle(migrationClient), { migrationsFolder: "./drizzle" });
+  migrationClient.CLOSE;
 }
 
 main();
