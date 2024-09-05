@@ -22,7 +22,7 @@ export const usersTable = pgTable("users", {
     .references(() => userTypesTable.type_id),
 });
 
-export const categoriesTable = pgTable("categoriesTable", {
+export const categoriesTable = pgTable("business_categories", {
   category_id: serial("category_id").primaryKey(),
   category_name: varchar("category_name", { length: 100 }).notNull().unique(),
 });
@@ -77,7 +77,7 @@ export const reportCategoriesTable = pgTable("report_categories", {
     .unique(),
 });
 
-export const reportsTable = pgTable("reviews", {
+export const reportsTable = pgTable("reports", {
   report_id: serial("review_id").primaryKey(),
   reported_on: timestamp("reported_on").notNull().defaultNow(),
   user_id: integer("user_id")
