@@ -105,7 +105,11 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="john@example.com" {...field} />
+                    <Input
+                      placeholder="john@example.com"
+                      {...field}
+                      autoFocus
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
