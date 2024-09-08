@@ -1,12 +1,16 @@
 import { getSession } from "@/lib/serverSession";
 import { redirect } from "next/navigation";
-import SignoutButton from "./SignoutButton";
+import SignoutButton from "@/components/SignoutButton";
 
 export default async function DashboardPage() {
   const session = await getSession();
 
   if (!session) {
     redirect("/auth/login");
+  }
+
+  if (session.user.user_type !== 1) {
+    redirect("/");
   }
 
   return (
