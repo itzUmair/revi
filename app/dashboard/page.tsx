@@ -1,24 +1,19 @@
-"use client";
+import { getSession } from "@/lib/serverSession";
+import { redirect } from "next/navigation";
+import SignoutButton from "./SignoutButton";
 
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
-export default function DashboardPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  if (status === "loading") return <p>Loading...</p>;
+export default async function DashboardPage() {
+  const session = await getSession();
 
   if (!session) {
-    router.push("/auth/signin");
-    return null;
+    redirect("/auth/login");
   }
 
   return (
     <div>
       <h1>Welcome {session.user.email}</h1>
       <p>Your role: {session.user.user_type}</p>
-      <button onClick={() => signOut()}>Sign Out</button>
+      <SignoutButton />
     </div>
   );
 }
