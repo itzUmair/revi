@@ -151,7 +151,7 @@ export function LoginForm() {
       </CardContent>
       <CardFooter className="text-center w-full">
         Don&apos;t have an account?&nbsp;
-        <Link href="/signup" className="underline">
+        <Link href="/auth/signup" className="underline">
           Create an account
         </Link>
       </CardFooter>
