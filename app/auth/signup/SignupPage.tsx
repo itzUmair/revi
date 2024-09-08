@@ -163,7 +163,10 @@ export function SignupForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full bg-brand-color hover:bg-brand-color-focus"
+            >
               Create Account
             </Button>
           </form>

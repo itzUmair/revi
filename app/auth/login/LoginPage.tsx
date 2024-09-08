@@ -147,7 +147,10 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full bg-brand-color  hover:bg-brand-color-focus"
+            >
               Submit
             </Button>
           </form>
