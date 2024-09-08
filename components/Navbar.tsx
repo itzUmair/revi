@@ -26,107 +26,98 @@ import { Separator } from "./ui/separator";
 import ModeToggle from "./ModeToggle";
 import { useEffect, useState } from "react";
 
-function Navbar() {
-  const [currentWidth, setCurrentWidth] = useState<number>(1024);
-  const pathname = usePathname();
-  const { status } = useSession();
-
-  const isOnAuthPage = pathname.includes("/auth");
-
-  useEffect(() => {
-    function handleResize() {
-      setCurrentWidth(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  });
-
-  function MobileNavbar() {
-    return (
-      <nav className="flex justify-between items-center px-4 bg-zinc-200/50 dark:bg-slate-950/50 backdrop-blur-sm py-1 fixed w-full top-0">
-        <Link href={"/"} className="flex font-bold items-center">
-          <Image src="/revi-logo.png" alt="revi logo" width={60} height={60} />
-          Revi
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <HamburgerMenuIcon width={25} height={25} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-zinc-200/50 dark:bg-slate-950/50 backdrop-blur-sm py-1">
-            <DropdownMenuLabel>Menu</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+function MobileNavbar({
+  isOnAuthPage,
+  status,
+}: {
+  isOnAuthPage: boolean;
+  status: "authenticated" | "unauthenticated" | "loading";
+}) {
+  return (
+    <nav className="flex justify-between items-center px-4 bg-zinc-200/50 dark:bg-slate-950/50 backdrop-blur-sm py-1 fixed w-full top-0">
+      <Link href={"/"} className="flex font-bold items-center">
+        <Image src="/revi-logo.png" alt="revi logo" width={60} height={60} />
+        Revi
+      </Link>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <HamburgerMenuIcon width={25} height={25} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-zinc-200/50 dark:bg-slate-950/50 backdrop-blur-sm py-1">
+          <DropdownMenuLabel>Menu</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Link href={"settings"} className="flex items-center">
+              <MagnifyingGlassIcon />
+              &nbsp;Search
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={"settings"} className="flex items-center">
+              <BackpackIcon />
+              &nbsp;Register
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={"settings"} className="flex items-center">
+              <ReaderIcon />
+              &nbsp;About us
+            </Link>
+          </DropdownMenuItem>
+          {status === "authenticated" && (
             <DropdownMenuItem>
               <Link href={"settings"} className="flex items-center">
-                <MagnifyingGlassIcon />
-                &nbsp;Search
+                <GearIcon />
+                &nbsp;Settings
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href={"settings"} className="flex items-center">
-                <BackpackIcon />
-                &nbsp;Register
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href={"settings"} className="flex items-center">
-                <ReaderIcon />
-                &nbsp;About us
-              </Link>
-            </DropdownMenuItem>
-            {status === "authenticated" && (
+          )}
+          <DropdownMenuItem>
+            <ModeToggle />
+          </DropdownMenuItem>
+          {!isOnAuthPage && status !== "authenticated" && (
+            <>
               <DropdownMenuItem>
-                <Link href={"settings"} className="flex items-center">
-                  <GearIcon />
-                  &nbsp;Settings
+                <Link
+                  href={"/auth/login"}
+                  className="border-2 border-brand-color px-2 py-1 rounded-md w-full text-center"
+                >
+                  Login
                 </Link>
               </DropdownMenuItem>
-            )}
-            <DropdownMenuItem>
-              <ModeToggle />
-            </DropdownMenuItem>
-            {!isOnAuthPage && status !== "authenticated" && (
-              <>
-                <DropdownMenuItem>
-                  <Link
-                    href={"/auth/login"}
-                    className="border-2 border-brand-color px-2 py-1 rounded-md w-full text-center"
-                  >
-                    Login
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link
-                    href={"/auth/signup"}
-                    className="border-2 border-brand-color bg-brand-color text-white px-2 py-1 rounded-md w-full text-center"
-                  >
-                    Signup
-                  </Link>
-                </DropdownMenuItem>
-              </>
-            )}
-
-            <Separator />
-            {status === "authenticated" && (
               <DropdownMenuItem>
-                <button className="flex items-center" onClick={() => signOut()}>
-                  <ExitIcon className="rotate-180" />
-                  &nbsp;Log out
-                </button>
+                <Link
+                  href={"/auth/signup"}
+                  className="border-2 border-brand-color bg-brand-color text-white px-2 py-1 rounded-md w-full text-center"
+                >
+                  Signup
+                </Link>
               </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </nav>
-    );
-  }
+            </>
+          )}
 
-  if (currentWidth < 768) {
-    return <MobileNavbar />;
-  }
+          <Separator />
+          {status === "authenticated" && (
+            <DropdownMenuItem>
+              <button className="flex items-center" onClick={() => signOut()}>
+                <ExitIcon className="rotate-180" />
+                &nbsp;Log out
+              </button>
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </nav>
+  );
+}
+
+function DesktopNavbar({
+  isOnAuthPage,
+  status,
+}: {
+  isOnAuthPage: boolean;
+  status: "authenticated" | "unauthenticated" | "loading";
+}) {
   return (
     <nav className="flex justify-between items-center px-4 md:px-16 lg:px-32 bg-zinc-200/50 dark:bg-slate-950/50 backdrop-blur-sm py-1 w-full fixed top-0">
       <Link href={"/"} className="flex font-bold items-center">
@@ -203,6 +194,32 @@ function Navbar() {
       )}
     </nav>
   );
+}
+
+function Navbar() {
+  const [currentWidth, setCurrentWidth] = useState<number>(1024);
+  const pathname = usePathname();
+  const { status } = useSession();
+
+  const isOnAuthPage = pathname.includes("/auth");
+
+  useEffect(() => {
+    function handleResize() {
+      setCurrentWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  });
+
+  if (currentWidth < 768) {
+    return <MobileNavbar isOnAuthPage={isOnAuthPage} status={status} />;
+  } else {
+    return <DesktopNavbar isOnAuthPage={isOnAuthPage} status={status} />;
+  }
 }
 
 export default Navbar;
