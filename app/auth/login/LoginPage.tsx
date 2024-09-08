@@ -83,7 +83,7 @@ export function LoginForm() {
         });
       }
     } else {
-      router.push("/?from=login");
+      router.push("/");
     }
   };
 

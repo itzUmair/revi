@@ -10,9 +10,9 @@ type Credentials = {
 };
 
 type User = {
-  user_id: string;
+  user_id: number;
   email: string;
-  user_type: string;
+  user_type: number;
 };
 
 const authOptions: NextAuthOptions = {
@@ -53,7 +53,7 @@ const authOptions: NextAuthOptions = {
       if (token) {
         session.user.user_id = token.user_id as number;
         session.user.email = token.email as string;
-        session.user.user_type = token.user_type as string;
+        session.user.user_type = token.user_type as number;
       }
       return session;
     },
