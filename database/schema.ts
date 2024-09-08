@@ -15,6 +15,8 @@ export const userTypesTable = pgTable("user_types", {
 
 export const usersTable = pgTable("users", {
   user_id: serial("user_id").primaryKey(),
+  first_name: varchar("first_name", { length: 100 }).notNull(),
+  last_name: varchar("last_name", { length: 100 }),
   email: varchar("email", { length: 256 }).notNull().unique(),
   password: varchar("password", { length: 60 }).notNull(),
   user_type: integer("user_type")
