@@ -74,7 +74,7 @@ export function SignupForm() {
   };
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="mx-auto max-w-sm bg-zinc-100 dark:bg-slate-950">
       <CardHeader>
         <CardTitle className="text-2xl text-center">Signup</CardTitle>
         <CardDescription className="text-center">
