@@ -1,6 +1,8 @@
 import { getSession } from "@/lib/serverSession";
 import { redirect } from "next/navigation";
-import SignoutButton from "@/components/SignoutButton";
+import Sidebar from "./Sidebar";
+import AdminViewProvider from "@/context/AdminViewContext";
+import MainContent from "./MainContent";
 
 export default async function DashboardPage() {
   const session = await getSession();
@@ -14,10 +16,11 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="px-4 md-px-16 lg:px-32">
-      <h1>Welcome {session.user.email}</h1>
-      <p>Your role: {session.user.user_type}</p>
-      <SignoutButton />
+    <main className="px-4 h-screen flex">
+      <AdminViewProvider>
+        <Sidebar session={session} />
+        <MainContent />
+      </AdminViewProvider>
     </main>
   );
 }
