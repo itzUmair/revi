@@ -14,6 +14,7 @@ import {
   PersonIcon,
 } from "@radix-ui/react-icons";
 import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import { useContext } from "react";
 
 type Links = {
@@ -67,7 +68,11 @@ function Sidebar({ session }: { session: Session }) {
         </ul>
       </section>
       <Separator className="mb-2" />
-      <Button variant={"outline"} className="w-full mb-8">
+      <Button
+        onClick={() => signOut()}
+        variant={"outline"}
+        className="w-full mb-8"
+      >
         <ExitIcon className="rotate-180" />
         &nbsp;Log out
       </Button>

@@ -1,6 +1,8 @@
+"use server";
+
 import createConnection from "@/database";
-import { usersTable } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import { usersTable, userTypesTable } from "@/database/schema";
+import { eq, not } from "drizzle-orm";
 
 export async function getUserByEmail(email: string) {
   const db = createConnection();
@@ -12,4 +14,20 @@ export async function getUserByEmail(email: string) {
     throw new Error("Invalid email or password");
   }
   return user;
+}
+
+export async function getAllUsers() {
+  const db = createConnection();
+  const users = await db
+    .select({
+      user_id: usersTable.user_id,
+      first_name: usersTable.first_name,
+      last_name: usersTable.last_name,
+      type: userTypesTable.type_name,
+      email: usersTable.email,
+    })
+    .from(usersTable)
+    .innerJoin(userTypesTable, eq(userTypesTable.type_id, usersTable.user_type))
+    .where(not(eq(usersTable.user_type, 1)));
+  return users;
 }
