@@ -35,7 +35,7 @@ function Sidebar({ session }: { session: Session }) {
   ];
 
   return (
-    <aside className="flex flex-col max-w-48 h-full px-5 pt-8">
+    <aside className="flex flex-col max-w-48 h-full px-5 pt-4">
       <section className="flex items-center gap-x-2">
         <span className="bg-slate-950 text-white dark:bg-zinc-100 dark:text-black p-2 rounded-lg">
           <PersonIcon width={25} height={25} />
