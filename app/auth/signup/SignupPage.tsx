@@ -27,7 +27,11 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import {
+  Component1Icon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+} from "@radix-ui/react-icons";
 import { useToast } from "@/hooks/use-toast";
 import { signup } from "./actions";
 
@@ -45,6 +49,7 @@ const formSchema = z.object({
 });
 
 export function SignupForm() {
+  const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [isShowPasswordActive, setIsShowPasswordActive] =
     useState<boolean>(false);
 
@@ -61,6 +66,7 @@ export function SignupForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setFormSubmitting(true);
     const result = await signup(values);
     if (!result.status) {
       form.setError("email", { type: "custom", message: result.message });
@@ -71,6 +77,7 @@ export function SignupForm() {
       });
       router.push("/auth/login");
     }
+    setFormSubmitting(false);
   };
 
   return (
@@ -165,9 +172,18 @@ export function SignupForm() {
             />
             <Button
               type="submit"
+              disabled={formSubmitting}
               className="w-full bg-brand-color hover:bg-brand-color-focus"
             >
-              Create Account
+              {formSubmitting ? (
+                <Component1Icon
+                  className=" animate-spin"
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                "Create Account"
+              )}
             </Button>
           </form>
         </Form>

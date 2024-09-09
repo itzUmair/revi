@@ -28,7 +28,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import {
+  Component1Icon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+} from "@radix-ui/react-icons";
 import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
@@ -46,6 +50,8 @@ export function LoginForm() {
   const [isShowPasswordActive, setIsShowPasswordActive] =
     useState<boolean>(false);
 
+  const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
+
   const router = useRouter();
 
   const { toast } = useToast();
@@ -59,6 +65,7 @@ export function LoginForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setFormSubmitting(true);
     const result = await signIn("credentials", {
       redirect: false,
       email: values.email,
@@ -85,6 +92,7 @@ export function LoginForm() {
     } else {
       router.push("/");
     }
+    setFormSubmitting(false);
   };
 
   return (
@@ -149,9 +157,18 @@ export function LoginForm() {
             />
             <Button
               type="submit"
+              disabled={formSubmitting}
               className="w-full bg-brand-color  hover:bg-brand-color-focus"
             >
-              Submit
+              {formSubmitting ? (
+                <Component1Icon
+                  className=" animate-spin"
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </form>
         </Form>
