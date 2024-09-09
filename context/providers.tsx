@@ -5,16 +5,14 @@ import { ThemeProvider } from "./theme-provider";
 
 const Providers = ({ children }: { children: ReactNode }) => {
   return (
-    <SessionProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        {children}
-      </ThemeProvider>
-    </SessionProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <SessionProvider>{children}</SessionProvider>
+    </ThemeProvider>
   );
 };
 

@@ -1,46 +1,75 @@
 "use client";
 
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
-function getButtonContent(theme?: string, variant?: string) {
-  if (theme === "dark") {
-    return (
-      <>
-        {variant === "minimal" && <MoonIcon width={20} height={20} />}
-        {variant !== "minimal" && (
-          <>
-            <MoonIcon />
-            &nbsp;{variant !== "minimal" && "Dark Mode"}
-          </>
-        )}
-      </>
-    );
-  } else {
-    return (
-      <>
-        {variant === "minimal" && <SunIcon width={20} height={20} />}
-        {variant !== "minimal" && (
-          <>
-            <SunIcon />
-            &nbsp;Light Mode
-          </>
-        )}
-      </>
-    );
-  }
-}
-
-function ModeToggle({ variant }: { variant?: "minimal" | "normal" }) {
+const ModeToggle = () => {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const selected =
+    theme === "light" ? (
+      <>
+        <SunIcon width={20} height={20} />
+        &nbsp;Light
+      </>
+    ) : theme === "dark" ? (
+      <>
+        <MoonIcon width={20} height={20} />
+        &nbsp;Dark
+      </>
+    ) : (
+      <>
+        <DesktopIcon />
+        &nbsp;System
+      </>
+    );
+
   return (
-    <button
-      className={`flex items-center ${variant === "minimal" && "mr-2"}`}
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-    >
-      {getButtonContent(theme, variant)}
-    </button>
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex items-center">
+        {selected}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-zinc-200 dark:bg-slate-950 z-50 p-2 w-full">
+        <DropdownMenuItem
+          onClick={() => setTheme("system")}
+          className="flex items-center mb-2"
+        >
+          <DesktopIcon />
+          &nbsp;System
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => setTheme("light")}
+          className="flex items-center mb-2"
+        >
+          <SunIcon />
+          &nbsp;Light
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => setTheme("dark")}
+          className="flex items-center mb-2"
+        >
+          <MoonIcon />
+          &nbsp;Dark
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
-}
+};
 
 export default ModeToggle;

@@ -145,7 +145,7 @@ function DesktopNavbar({
       {!isOnAuthPage && status !== "authenticated" && (
         <ul className="flex items-center gap-x-2">
           <li>
-            <ModeToggle variant="minimal" />
+            <ModeToggle />
           </li>
           <li>
             <Link
