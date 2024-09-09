@@ -3,7 +3,6 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Providers from "@/context/providers";
 import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/Navbar";
 
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -20,11 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={roboto.className}>
-        <Providers>
-          <Navbar />
-          <div className="h-16">{/* this is just a black space */}</div>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>
