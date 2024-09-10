@@ -14,7 +14,9 @@ function MainContent() {
         <p className="text-xs text-gray-500">{new Date().toDateString()}</p>
       </section>
       <Separator />
-      <section>{currentView === "users" && <Users />}</section>
+      <section className="relative">
+        {currentView === "users" && <Users />}
+      </section>
     </div>
   );
 }
