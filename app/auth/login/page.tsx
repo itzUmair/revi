@@ -19,7 +19,7 @@ export default async function SignInPage() {
         height={150}
         className="mx-auto"
       />
-      <LoginForm />;
+      <LoginForm />
     </main>
   );
 }

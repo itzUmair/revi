@@ -13,14 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-export type User = {
-  user_id: number;
-  first_name: string;
-  last_name: string | null;
-  email: string;
-  type: string;
-};
+import { User } from "@/types/types";
 
 async function handleUserDelete(user: User) {
   await deleteUser(user.user_id);
@@ -48,7 +41,7 @@ export const columns: ColumnDef<User>[] = [
     header: "Email",
   },
   {
-    accessorKey: "type",
+    accessorKey: "user_type",
     header: ({ column }) => {
       return (
         <Button
