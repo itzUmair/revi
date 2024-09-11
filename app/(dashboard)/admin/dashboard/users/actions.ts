@@ -3,12 +3,14 @@
 import createConnection from "@/database";
 import { usersTable } from "@/database/schema";
 import bcrypt from "bcryptjs";
+import { revalidatePath } from "next/cache";
 
-export async function signup(data: {
+export async function createNewUser(data: {
   first_name: string;
   last_name?: string | undefined;
   email: string;
   password: string;
+  user_type: string;
 }) {
   let client;
   try {
@@ -17,10 +19,15 @@ export async function signup(data: {
     const hashedPassword = await bcrypt.hash(data.password, 10);
     await db
       .insert(usersTable)
-      .values({ ...data, password: hashedPassword, user_type: 3 });
+      .values({
+        ...data,
+        password: hashedPassword,
+        user_type: parseInt(data.user_type),
+      });
+    revalidatePath("/admin/dashboard");
     return {
       status: "success",
-      message: "Account created successfully! Try logging in",
+      message: "Account created successfully!",
     };
   } catch (error: any) {
     if (error.code === "23505") {

@@ -20,9 +20,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
+import { Button } from "@/components/ui/button";
+import { SignupForm } from "@/app/auth/signup/SignupPage";
+import { CreateUserForm } from "./CreateUserForm";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface UserTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,7 +67,7 @@ export function UserTable<TData, TValue>({
 
   return (
     <div className="h-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center gap-x-2 py-4">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -62,8 +76,20 @@ export function UserTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        <Dialog>
+          <DialogTrigger className="ml-auto bg-slate-950 px-2 py-1 text-white rounded-md">
+            Add user
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add new user</DialogTitle>
+              <DialogDescription>Create a new user</DialogDescription>
+            </DialogHeader>
+            <CreateUserForm />
+          </DialogContent>
+        </Dialog>
       </div>
-      <div className="rounded-md border mb-4">
+      <ScrollArea className="rounded-md border mb-4 h-[70vh]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -112,7 +138,7 @@ export function UserTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
+      </ScrollArea>
       <DataTablePagination table={table} />
     </div>
   );

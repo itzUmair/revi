@@ -5,19 +5,21 @@ import { usersTable, userTypesTable } from "@/database/schema";
 import { eq, not } from "drizzle-orm";
 
 export async function getUserByEmail(email: string) {
-  const db = createConnection();
+  const { queryClient, db } = createConnection();
   const [user] = await db
     .select()
     .from(usersTable)
     .where(eq(usersTable.email, email));
   if (!user) {
+    await queryClient.end();
     throw new Error("Invalid email or password");
   }
+  await queryClient.end();
   return user;
 }
 
 export async function getAllUsers() {
-  const db = createConnection();
+  const { queryClient, db } = createConnection();
   const users = await db
     .select({
       user_id: usersTable.user_id,
@@ -31,5 +33,8 @@ export async function getAllUsers() {
       userTypesTable,
       eq(userTypesTable.type_id, usersTable.user_type)
     );
+
+  await queryClient.end();
+
   return users;
 }
