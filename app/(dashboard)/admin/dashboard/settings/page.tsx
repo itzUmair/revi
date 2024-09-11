@@ -4,7 +4,6 @@ import { getUserByEmail } from "@/data-access";
 import { getSession } from "@/lib/serverSession";
 import { ChevronDown } from "lucide-react";
 import { redirect } from "next/navigation";
-import ProfileSettingsForm from "./ProfileSettingsForm";
 
 async function page() {
   const session = await getSession();
@@ -15,10 +14,12 @@ async function page() {
   return (
     <section>
       <DashboardHeader />
-      <div className="mt-8 w-1/4">
-        <ul>
-          <li className="flex justify-between">
-            Appearance:
+      <div className="flex mt-8">
+        <ul className="w-1/6">
+          <li>Appearance:</li>
+        </ul>
+        <ul className="w-full">
+          <li>
             <span className="flex items-center gap-x-1">
               <ModeToggle />
               <ChevronDown />
