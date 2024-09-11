@@ -1,6 +1,5 @@
 import DashboardHeader from "@/components/DashboardHeader";
 import ModeToggle from "@/components/ModeToggle";
-import { getUserByEmail } from "@/data-access";
 import { getSession } from "@/lib/serverSession";
 import { ChevronDown } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -8,8 +7,6 @@ import { redirect } from "next/navigation";
 async function page() {
   const session = await getSession();
   if (!session || session.user.user_type !== 1) redirect("/");
-
-  const user = await getUserByEmail(session.user.email);
 
   return (
     <section>
