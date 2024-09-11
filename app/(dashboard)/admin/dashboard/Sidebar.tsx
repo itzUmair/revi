@@ -89,7 +89,7 @@ function Sidebar() {
                 href={link.path}
                 className={`flex items-center mb-3 py-1 pl-2 w-full ${
                   currentView === link.name.toLowerCase() &&
-                  "bg-zinc-50 shadow-md py-1 rounded-md"
+                  "bg-zinc-50 dark:bg-slate-950 shadow-md py-1 rounded-md"
                 }`}
               >
                 {link.icon}

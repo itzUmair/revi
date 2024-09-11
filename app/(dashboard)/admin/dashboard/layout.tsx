@@ -14,7 +14,9 @@ function layout({
   return (
     <main className="flex h-screen">
       <Sidebar />
-      <div className="flex-1 px-4 bg-zinc-50 mt-4 rounded-md">{children}</div>
+      <div className="flex-1 px-4 bg-zinc-50 dark:bg-slate-950 mt-4 rounded-md">
+        {children}
+      </div>
     </main>
   );
 }

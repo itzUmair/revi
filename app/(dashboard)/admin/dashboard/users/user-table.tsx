@@ -77,10 +77,10 @@ export function UserTable<TData, TValue>({
           className="max-w-sm"
         />
         <Dialog>
-          <DialogTrigger className="ml-auto bg-slate-950 px-2 py-1 text-white rounded-md">
+          <DialogTrigger className="ml-auto bg-slate-950 dark:bg-zinc-50 px-2 py-1 text-white dark:text-black rounded-md">
             Add user
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="dark:bg-slate-950">
             <DialogHeader>
               <DialogTitle>Add new user</DialogTitle>
               <DialogDescription>Create a new user</DialogDescription>
