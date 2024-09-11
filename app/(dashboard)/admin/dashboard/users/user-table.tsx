@@ -3,10 +3,12 @@
 import {
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -18,19 +20,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "./input";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { DataTablePagination } from "./data-table-pagination";
+import { DataTablePagination } from "@/components/ui/data-table-pagination";
 
-interface DataTableProps<TData, TValue> {
+interface UserTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function UserTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: UserTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
@@ -38,9 +41,12 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     state: {
+      sorting,
       columnFilters,
     },
   });
@@ -57,7 +63,7 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border mb-4">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

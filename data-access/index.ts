@@ -27,7 +27,9 @@ export async function getAllUsers() {
       email: usersTable.email,
     })
     .from(usersTable)
-    .innerJoin(userTypesTable, eq(userTypesTable.type_id, usersTable.user_type))
-    .where(not(eq(usersTable.user_type, 1)));
+    .innerJoin(
+      userTypesTable,
+      eq(userTypesTable.type_id, usersTable.user_type)
+    );
   return users;
 }

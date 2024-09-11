@@ -1,14 +1,12 @@
+import DashboardHeader from "@/components/DashboardHeader";
 import { getSession } from "@/lib/serverSession";
 import { redirect } from "next/navigation";
-import Sidebar from "./Sidebar";
-import AdminViewProvider from "@/context/AdminViewContext";
-import MainContent from "./MainContent";
 
-export default async function DashboardPage() {
+async function page() {
   const session = await getSession();
 
   if (!session) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   if (session.user.user_type !== 1) {
@@ -16,11 +14,11 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="px-4 h-screen flex">
-      <AdminViewProvider>
-        <Sidebar session={session} />
-        <MainContent />
-      </AdminViewProvider>
-    </main>
+    <section>
+      <DashboardHeader />
+      Dashboard
+    </section>
   );
 }
+
+export default page;

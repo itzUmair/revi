@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { AdminViewContext } from "@/context/AdminViewContext";
 import {
   BackpackIcon,
   ChatBubbleIcon,
@@ -10,33 +9,59 @@ import {
   ExitIcon,
   GearIcon,
   HomeIcon,
-  LightningBoltIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
-import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
-import { useContext } from "react";
+import { LoaderCircleIcon } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Links = {
   name: string;
   icon: any;
+  path: string;
 };
 
-function Sidebar({ session }: { session: Session }) {
-  const { currentView, changeCurrentView } = useContext(AdminViewContext);
+function Sidebar() {
+  const pathname = usePathname();
+  const { data: session, status } = useSession();
+  const currentView = pathname.split("/").pop();
 
   const links: Links[] = [
-    { name: "Dashboard", icon: <HomeIcon width={20} height={20} /> },
-    { name: "Users", icon: <PersonIcon width={20} height={20} /> },
-    { name: "Business", icon: <BackpackIcon width={20} height={20} /> },
-    { name: "Reviews", icon: <ChatBubbleIcon width={20} height={20} /> },
-    { name: "Reports", icon: <ClipboardIcon width={20} height={20} /> },
-    { name: "Admins", icon: <LightningBoltIcon width={20} height={20} /> },
-    { name: "Settings", icon: <GearIcon width={20} height={20} /> },
+    {
+      name: "Dashboard",
+      icon: <HomeIcon width={20} height={20} />,
+      path: "/admin/dashboard",
+    },
+    {
+      name: "Users",
+      icon: <PersonIcon width={20} height={20} />,
+      path: "/admin/dashboard/users",
+    },
+    {
+      name: "Businesses",
+      icon: <BackpackIcon width={20} height={20} />,
+      path: "/admin/dashboard/businesses",
+    },
+    {
+      name: "Reviews",
+      icon: <ChatBubbleIcon width={20} height={20} />,
+      path: "/admin/dashboard/reviews",
+    },
+    {
+      name: "Reports",
+      icon: <ClipboardIcon width={20} height={20} />,
+      path: "/admin/dashboard/reports",
+    },
+    {
+      name: "Settings",
+      icon: <GearIcon width={20} height={20} />,
+      path: "/admin/dashboard/settings",
+    },
   ];
 
   return (
-    <aside className="flex flex-col max-w-48 h-full px-5 pt-4">
+    <aside className="flex flex-col w-48 h-full px-5 pt-4">
       <section className="flex items-center gap-x-2">
         <span className="bg-slate-950 text-white dark:bg-zinc-100 dark:text-black p-2 rounded-lg">
           <PersonIcon width={25} height={25} />
@@ -44,7 +69,14 @@ function Sidebar({ session }: { session: Session }) {
         <div>
           <p className="font-bold">Welcome</p>
           <p className="text-xs text-gray-500 overflow-hidden text-ellipsis max-w-[15ch]">
-            {session.user.email}
+            {status === "authenticated" && session.user.email}
+            {status === "loading" && (
+              <LoaderCircleIcon
+                width={20}
+                height={20}
+                className="animate-spin"
+              />
+            )}
           </p>
         </div>
       </section>
@@ -53,16 +85,16 @@ function Sidebar({ session }: { session: Session }) {
         <ul>
           {links.map((link, index) => (
             <li key={index}>
-              <button
+              <Link
+                href={link.path}
                 className={`flex items-center mb-3 py-1 pl-2 w-full ${
                   currentView === link.name.toLowerCase() &&
                   "bg-zinc-50 shadow-md py-1 rounded-md"
                 }`}
-                onClick={() => changeCurrentView(link.name.toLowerCase())}
               >
                 {link.icon}
                 &nbsp;{link.name}
-              </button>
+              </Link>
             </li>
           ))}
         </ul>
