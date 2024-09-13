@@ -34,7 +34,7 @@ function MobileNavbar({
   status: "authenticated" | "unauthenticated" | "loading";
 }) {
   return (
-    <nav className="2xl:w-[2460px] mx-auto flex justify-between items-center px-4 bg-zinc-200/50 dark:bg-slate-950/50 backdrop-blur-sm py-1 fixed w-full top-0">
+    <nav className="2xl:w-[2460px] mx-auto flex justify-between items-center px-4 bg-zinc-200/80 dark:bg-slate-950/80 backdrop-blur-md py-1 fixed w-full top-0">
       <Link href={"/"} className="flex font-bold items-center">
         <Image src="/revi-logo.png" alt="revi logo" width={60} height={60} />
         Revi
