@@ -6,12 +6,12 @@ import Link from "next/link";
 import {
   ChartNoAxesCombinedIcon,
   MessageCircleHeartIcon,
-  MessageSquare,
   RocketIcon,
   SearchIcon,
   SquareStackIcon,
   UsersIcon,
 } from "lucide-react";
+import Footer from "@/components/Footer";
 
 export default async function Home() {
   const session = await getSession();
@@ -126,6 +126,27 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      <section className="mt-8">
+        <p className="text-center text-lg">
+          Whether you&apos;re here to explore or to grow, Revi is where reviews
+          lead to better business.
+        </p>
+        <div className="flex justify-center gap-x-2 mt-4">
+          <Link
+            href={"/search"}
+            className="px-2 py-1 lg:px-4 lg:py-2 text-nowrap bg-brand-color text-white hover:bg-brand-color-focus rounded-md transition-colors"
+          >
+            Explore Businesses
+          </Link>
+          <Link
+            href={"/register"}
+            className="px-2 py-1 lg:px-4 lg:py-2 text-nowrap border border-brand-color text-brand-color hover:bg-brand-color hover:text-white rounded-md transition-colors"
+          >
+            Register Business
+          </Link>
+        </div>
+      </section>
+      <Footer />
     </main>
   );
 }
