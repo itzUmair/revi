@@ -12,4 +12,5 @@ export type UserRaw = {
   last_name: string | null;
   email: string;
   user_type: number;
+  password: string;
 };
