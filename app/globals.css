@@ -8,6 +8,6 @@
   html,
   body,
   #root {
-    @apply bg-zinc-100 dark:bg-slate-900 h-screen;
+    @apply bg-zinc-100 dark:bg-slate-900;
   }
 }
