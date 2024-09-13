@@ -6,7 +6,7 @@ async function page() {
   const session = await getSession();
 
   if (!session) {
-    redirect("/login");
+    redirect("/auth/login");
   }
 
   if (session.user.user_type !== 1) {
